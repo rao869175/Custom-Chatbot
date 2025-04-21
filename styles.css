@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f2f2f2;
+}
+.chat-box {
+    width: 300px;
+    margin: auto;
+    background: rgba(11, 214, 55, 0.15);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+.chat-log {
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background: #fafafa;
+}
+.user, .bot {
+    margin: 5px 0;
+    padding: 8px;
+    border-radius: 8px;
+}
+.user {
+    background-color: #cce5ff;
+}
+.bot {
+    background-color: #d4edda;
+}
+input[type="text"] {
+    padding: 10px;
+    width: 70%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+button {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: rgba(7, 150, 38, 0.15);
+    color: #333;
+    cursor: pointer;
+}
+button:hover {
+    background: rgba(11, 214, 55, 0.15);
+}
