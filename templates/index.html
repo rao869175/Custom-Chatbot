@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Assistant Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f2f2f2;
+        }
+        .chat-box {
+            width: 300px;
+            margin: auto;
+            background:rgba(11, 214, 55, 0.15);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+        }
+        .chat-log {
+            height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: #fafafa;
+        }
+        .user, .bot {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        .user {
+            background-color: #cce5ff;
+        }
+        .bot {
+            background-color: #d4edda;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px ;
+            border-radius: 5px;
+            border: none;
+            background:rgba(7, 150, 38, 0.15);
+            color: #333;
+            cursor: pointer;
+        }
+        button:hover {
+            background: rgba(11, 214, 55, 0.15);
+        }
+    </style>
+</head>
+<body>
+<div class="chat-box">
+    <h2>Health Assistant Chatbot</h2>
+    <div class="chat-log" id="chat-log"></div>
+    <input type="text" id="user-input" placeholder="Ask your health question here...">
+    <button onclick="sendMessage()">Send</button>
+</div>
+
+<script>
+ 
+    function sendMessage() {
+        let userInput = document.getElementById("user-input").value;
+        if (userInput.trim() === "") return;
+
+        let chatLog = document.getElementById("chat-log");
+        chatLog.innerHTML += `<div class="user">You: ${userInput}</div>`;
+
+        fetch("/get_response", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: `user_message=${encodeURIComponent(userInput)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            chatLog.innerHTML += `<div class="bot">Bot: ${data.bot_reply}</div>`;
+            document.getElementById("user-input").value = "";
+            chatLog.scrollTop = chatLog.scrollHeight;
+        });
+    }
+
+    // 📌 Listen for Enter key
+    document.getElementById("user-input").addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent form submission if inside a form
+            sendMessage();
+        }
+    });
+</script>
+
+</body>
+</html>
